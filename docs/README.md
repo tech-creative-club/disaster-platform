@@ -3,7 +3,16 @@
 ![Github Last Commit](https://flat.badgen.net/github/last-commit/tech-creative-club/disaster-platform)
 
 # Welcome to **disaster-platform**!
-本プロジェクトは[技創くらぶ](https://github.com/tech-creative-club)が運営する災害時の統計情報表示サービスです。Xで投稿された[ポスト](https://x.com/tec2soc/status/1741750140921389262?s=20)に共感した有志のエンジニアたちが運営を行なっています。  
+本プロジェクトは[技創くらぶ](https://github.com/tech-creative-club)が運営する災害時の統計情報表示サービスです。Xへ投稿された[ポスト](https://x.com/tec2soc/status/1741750140921389262?s=20)に共感した有志のエンジニアたちが運営を行なっています。  
+
+### Goal and Value
+プロジェクトのゴールとバリューについて紹介します。  
+- **Goal**: 総合的な災害に対応可能な避難所運営者と被災者を繋ぐ要望集計アプリケーションを作成すること  
+- **Value**: 
+  - 避難所の物資不足・状況の共有を本サービスを用いて行うことにより対策の速度を上げることが可能になる
+  - 避難所運営者が欲している情報を投票形式で分かりやすく被災者に対して集計を取ることができる
+  
+共感できる場合は、是非開発コミュニティに参加して議論へ積極的に参加していただけると幸いです。
 
 ## FAQ
 **Q: [disaster-posts](https://github.com/tech-creative-club/disaster-posts)との違いは？**  
