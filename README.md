@@ -19,13 +19,13 @@
 A: disaster-postsは災害時の掲示板を作成すること目的としていますが、本プロジェクトでは、被災者が必要とする物資などを統計情報を元に行政機関・ボランティアなどに対して提供することを目的としています。
 
 **Q: 開発はどのような流れで行われているのか？**  
-A: 本プロジェクトでは**Issue駆動開発**にて開発をおこなっています。原則としてプロジェクトに何らかの変更を加えたい場合、まずはIssueを立てることによって開発する意思があることを伝える必要があります。詳細は[開発の手引き](https://github.com/tech-creative-club/disaster-platform/blob/main/CONTRIBUTING.md)をご覧ください。
+A: 本プロジェクトでは**Issue駆動開発**にて開発をおこなっています。原則としてプロジェクトに何らかの変更を加えたい場合、まずはIssueを立てることによって開発する意思があることを伝える必要があります。詳細は[開発の手引き](https://github.com/tech-creative-club/disaster-platform/blob/main/docs/CONTRIBUTING.md)をご覧ください。
 
 **Q: X(Twitter)を見て来たが、どのように開発に参加すれば良いのか？**  
-A: 興味を持って下さりありがとうございます。まずは[開発の手引き](https://github.com/tech-creative-club/disaster-platform/blob/main/CONTRIBUTING.md)をご一読いただき、コミュニティにご参加ください。
+A: 興味を持って下さりありがとうございます。まずは[開発の手引き](https://github.com/tech-creative-club/disaster-platform/blob/main/docs/CONTRIBUTING.md)をご一読いただき、コミュニティにご参加ください。
 
 ## Join us
-一緒に開発をしていただける仲間を常時募集中です。機能追加などの技術的な要素からドキュメント整備まで、幅広く人員を募集しています。興味がある方は[開発の手引き](https://github.com/tech-creative-club/disaster-platform/blob/main/CONTRIBUTING.md)をご覧ください。
+一緒に開発をしていただける仲間を常時募集中です。機能追加などの技術的な要素からドキュメント整備まで、幅広く人員を募集しています。興味がある方は[開発の手引き](https://github.com/tech-creative-club/disaster-platform/blob/main/docs/CONTRIBUTING.md)をご覧ください。
 
 ## License
 Copyright (c) 2024 技創くらぶ  
