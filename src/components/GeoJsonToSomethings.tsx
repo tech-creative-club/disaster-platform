@@ -155,6 +155,7 @@ export const GeoJsonToSomethings: React.FC<{
               zIndex={zIndex}
               style={style}
               index={index}
+              printMode={printMode}
             >
               {printMode ? (
                 index + 1
