@@ -37,7 +37,7 @@ export default function GeoJsonFeatureList({
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Grid container>
             <Grid item xs={4}>
-              <Icon emoji={emoji} />
+              <Icon emoji={emoji} iconColor="white" />
             </Grid>
             <Grid item xs={8}>
               <span className="flex h-full items-center" style={{ fontWeight: 500 }}>{`${

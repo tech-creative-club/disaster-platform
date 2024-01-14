@@ -18,6 +18,7 @@ interface Props {
   };
   index: number;
   children?: React.ReactNode;
+  printMode?: boolean;
 }
 
 export default function Pointer({
@@ -29,6 +30,7 @@ export default function Pointer({
   style,
   index,
   children,
+  printMode,
 }: Props): React.JSX.Element {
   const [isHover, setIsHover] = useState<boolean>(false);
 
@@ -68,7 +70,7 @@ export default function Pointer({
               color: style?.color ? style.color : 'rgba(0, 0, 0, 0.8)',
             }}
           >
-            {children ? children : index + 1}
+            {printMode ? index + 1 : children}
           </span>
         </div>
       </div>
