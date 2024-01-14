@@ -68,7 +68,8 @@ export default function Pointer({
               color: style?.color ? style.color : 'rgba(0, 0, 0, 0.8)',
             }}
           >
-            {children ? children : index + 1}
+            <div className="block print:hidden">{children}</div>
+            <div className="hidden print:block">{index + 1}</div>
           </span>
         </div>
       </div>

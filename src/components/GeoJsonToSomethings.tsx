@@ -4,6 +4,7 @@ import { Feature, FeatureCollection, GeoJsonProperties, Point } from 'geojson';
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import { Layer, Source, useMap } from 'react-map-gl/maplibre';
 import Pointer from './Pointer';
+import Icon from './Icon';
 
 export const GeoJsonToSomethings: React.FC<{
   geojson?: FeatureCollection;
@@ -153,7 +154,9 @@ export const GeoJsonToSomethings: React.FC<{
               zIndex={zIndex}
               style={style}
               index={index}
-            ></Pointer>
+            >
+              <Icon emoji={style?.emoji} backgroundColor={false} iconColor="black" height="auto" />
+            </Pointer>
           </Fragment>
         );
       })}
