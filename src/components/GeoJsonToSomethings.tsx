@@ -14,7 +14,8 @@ export const GeoJsonToSomethings: React.FC<{
     fillColor?: string;
     emoji?: string;
   };
-}> = ({ geojson, emoji, style }) => {
+  printMode?: boolean;
+}> = ({ geojson, emoji, style, printMode }) => {
   const { current: map } = useMap();
 
   const onClickMarker = useCallback(
@@ -155,7 +156,11 @@ export const GeoJsonToSomethings: React.FC<{
               style={style}
               index={index}
             >
-              <Icon emoji={style?.emoji} backgroundColor={false} iconColor="black" height="auto" />
+              {printMode ? (
+                index + 1
+              ) : (
+                <Icon emoji={style?.emoji} backgroundColor={false} iconColor="black" height="auto" />
+              )}
             </Pointer>
           </Fragment>
         );
