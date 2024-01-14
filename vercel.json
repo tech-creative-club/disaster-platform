@@ -1,0 +1,7 @@
+{
+    "buildCommand": "pnpm run build",
+    "devCommand": "pnpm run dev",
+    "regions": [
+        "kix1"
+    ]
+}

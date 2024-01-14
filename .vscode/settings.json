@@ -1,0 +1,10 @@
+{
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.validate.enable": true, // enable/disable TypeScript validation
+	"typescript.format.enable": true,
+    "css.lint.unknownAtRules": "ignore",
+    "search.exclude": {
+        "**/node_modules": false,
+        "**/node_moduless": true
+    }
+}

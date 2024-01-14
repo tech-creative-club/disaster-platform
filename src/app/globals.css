@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+::before,
+::after {
+  overscroll-behavior-y: none !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
