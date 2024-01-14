@@ -1,0 +1,23 @@
+version: "3"
+services:
+  db:
+    image: ankane/pgvector:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - mapprint-shelter-db-store:/var/lib/postgresql/data
+    healthcheck:
+      test: "pg_isready --username=postgres"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  mapprint-shelter-db-store:
+networks:
+  mapprint-shelter-network:
+    driver: bridge
