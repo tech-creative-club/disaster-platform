@@ -14,6 +14,7 @@ import { GeoJsonToSomethings } from '@/components/GeoJsonToSomethings';
 import GeoJsonFeatureList from '@/components/GeoJsonFeatureList';
 import CopyRights from '@/components/CopyRights';
 import { exampleGeoJson } from '@/constants/exampleGeoJson';
+import { Switch } from '@mui/material';
 
 // @ts-ignore
 import * as turf from '@turf/turf';
@@ -31,6 +32,13 @@ const Page = () => {
   const [geoJsonWithStyleListInMapBounds, setGeoJsonWithStyleListInMapBounds] = useState<
     Array<GeoJsonWithStyle>
   >([]);
+
+  //   print mode
+  const [mapPrintMode, setMapPrintMode] = useState<boolean>(false);
+
+  function handleSwitchChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setMapPrintMode(e.target.checked);
+  }
 
   useEffect(() => {
     const thisEffect = async () => {
@@ -129,6 +137,7 @@ const Page = () => {
                 key={geoJsonWithStyle.id}
                 geojson={geoJsonWithStyle.geojson}
                 style={geoJsonWithStyle.style}
+                printMode={mapPrintMode}
               />
             );
           })}
@@ -137,6 +146,14 @@ const Page = () => {
       </div>
       <div className="relative flex h-2/5 max-w-full flex-col overflow-hidden sm:h-full sm:w-4/12 sm:max-w-sm">
         <ul className="block list-none overflow-scroll py-4">
+          <div className="flex pl-5">
+            <span className="flex items-center pr-2">プリントモードをオンにする</span>
+            <Switch
+              checked={mapPrintMode}
+              onChange={handleSwitchChange}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+          </div>
           {geoJsonWithStyleListInMapBounds?.map((geoJsonWithStyle, geoIndex) => {
             const emoji = geoJsonWithStyle.style?.emoji;
             return geoJsonWithStyle.geojson.features.map((feature, index) => {
