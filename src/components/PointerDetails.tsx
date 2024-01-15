@@ -1,3 +1,5 @@
+import { t } from "i18next";
+
 interface PointerDetailsProps {
   title: string;
   address?: string;
@@ -10,7 +12,7 @@ export default function PointerDatails({ title, address }: PointerDetailsProps):
       {typeof address !== 'undefined' && address !== 'undefined undefined' ? (
         <p className="truncate pt-0.5 text-xs font-normal text-zinc-400">{address}</p>
       ) : (
-        <p className="truncate pt-0.5 text-xs font-normal text-zinc-400">表示ができませんでした</p>
+        <p className="truncate pt-0.5 text-xs font-normal text-zinc-400">{t("表示ができませんでした")}</p>
       )}
     </div>
   );

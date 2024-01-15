@@ -10,6 +10,8 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import { t } from "i18next";
+
 interface GeoJsonFeatureListProps {
   emoji?: string;
   feature: any | undefined;
@@ -50,11 +52,11 @@ export default function GeoJsonFeatureList({
           <div className="truncate">
             {typeof address !== 'undefined' && address !== 'undefined undefined' ? (
               <span className="truncate pt-0.5 text-sm font-normal text-zinc-400">
-                {address ? address : '表示できません'}
+                {address ? address : t('表示できません')}
               </span>
             ) : (
               <span className="truncate pt-0.5 text-sm font-normal text-zinc-400">
-                表示するコンテンツがありません
+                {t("表示するコンテンツがありません")}
               </span>
             )}
           </div>
