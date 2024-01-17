@@ -10,7 +10,7 @@
     "tailwind:prepare": "tw-patch install && tw-patch extract",
     "debug": "NODE_OPTIONS='--inspect' next dev",
     "dev": "npx prisma generate && next dev",
-    "build": "npx run tailwind:prepare && npx prisma generate && next build",
+    "build": "npm run tailwind:prepare && npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write '**/*.(ts|tsx)'"
