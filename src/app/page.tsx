@@ -15,6 +15,7 @@ import GeoJsonFeatureList from '@/components/GeoJsonFeatureList';
 import CopyRights from '@/components/CopyRights';
 import { exampleGeoJson } from '@/constants/exampleGeoJson';
 import { Switch } from '@mui/material';
+import DevelopmentMenu from '@/components/DevelopmentMenu';
 
 // @ts-ignore
 import * as turf from '@turf/turf';
@@ -24,6 +25,7 @@ const Page = () => {
   const searchParamsString = searchParams.toString();
   const printMode = searchParamsString === 'print=true';
 
+  const [isProduction, setIsProduction] = useState<boolean>(false);
   const [loaded, setLoaded] = useState(false);
   const [currentBounds, setCurrentBounds] = useState<LngLatBounds>();
 
@@ -66,39 +68,71 @@ const Page = () => {
       setLoaded(true);
       thisEffect();
     }
+    setIsProduction(process.env.NODE_ENV === 'production');
   }, [loaded]);
 
   useEffect(() => {
     if (!geoJsonWithStyleList) return;
     if (!currentBounds) return;
-    // setGeoJsonWithStyleListInMapBounds(
-    //   geoJsonWithStyleList.map((geoJsonWithStyle) => {
-    //     // currentBounds is a LngLatBounds object
-    //     // bbox extent in minX, minY, maxX, maxY order
-    //     // convert currentBounds to bbox array
-    //     const currentMapBbox = [
-    //       currentBounds.getWest(),
-    //       currentBounds.getSouth(),
-    //       currentBounds.getEast(),
-    //       currentBounds.getNorth(),
-    //     ];
-    //     const geojsonInMapBounds = geoJsonWithStyle.geojson.features.filter((feature) => {
-    //       // use turf.js to check if feature is in map bounds
-    //       const poly = turf.bboxPolygon(currentMapBbox);
-    //       const isInside = turf.booleanContains(poly, feature);
-    //       return isInside;
-    //     });
-    //     return {
-    //       ...geoJsonWithStyle,
-    //       geojson: {
-    //         type: 'FeatureCollection',
-    //         features: geojsonInMapBounds,
-    //       },
-    //     };
-    //   })
-    // );
-    setGeoJsonWithStyleListInMapBounds(exampleGeoJson);
-  }, [geoJsonWithStyleList, currentBounds]);
+
+    if (isProduction) {
+      setGeoJsonWithStyleListInMapBounds(
+        geoJsonWithStyleList.map((geoJsonWithStyle) => {
+          // currentBounds is a LngLatBounds object
+          // bbox extent in minX, minY, maxX, maxY order
+          // convert currentBounds to bbox array
+          const currentMapBbox = [
+            currentBounds.getWest(),
+            currentBounds.getSouth(),
+            currentBounds.getEast(),
+            currentBounds.getNorth(),
+          ];
+
+          const geojsonInMapBounds = geoJsonWithStyle.geojson.features.filter((feature) => {
+            // use turf.js to check if feature is in map bounds
+            const poly = turf.bboxPolygon(currentMapBbox);
+            const isInside = turf.booleanContains(poly, feature);
+            return isInside;
+          });
+
+          return {
+            ...geoJsonWithStyle,
+            geojson: {
+              type: 'FeatureCollection',
+              features: geojsonInMapBounds,
+            },
+          };
+        })
+      );
+    } else {
+      setGeoJsonWithStyleListInMapBounds(
+        exampleGeoJson.map((geoJsonWithStyle) => {
+          // 現在のマップのバウンズを取得
+          const currentMapBbox = [
+            currentBounds.getWest(),
+            currentBounds.getSouth(),
+            currentBounds.getEast(),
+            currentBounds.getNorth(),
+          ];
+
+          const geojsonInMapBounds = geoJsonWithStyle.geojson.features.filter((feature) => {
+            // use turf.js to check if feature is in map bounds
+            const poly = turf.bboxPolygon(currentMapBbox);
+            const isInside = turf.booleanContains(poly, feature);
+            return isInside;
+          });
+
+          return {
+            ...geoJsonWithStyle,
+            geojson: {
+              type: 'FeatureCollection',
+              features: geojsonInMapBounds,
+            },
+          };
+        })
+      );
+    }
+  }, [geoJsonWithStyleList, currentBounds, isProduction]);
 
   return (
     <div className="flex h-screen w-screen flex-col sm:flex-row-reverse">
@@ -143,6 +177,7 @@ const Page = () => {
           })}
         </Map>
         <CopyRights />
+        {!isProduction && <DevelopmentMenu />}
       </div>
       <div className="relative flex h-2/5 max-w-full flex-col overflow-hidden sm:h-full sm:w-4/12 sm:max-w-sm">
         <ul className="block list-none overflow-scroll py-4">
