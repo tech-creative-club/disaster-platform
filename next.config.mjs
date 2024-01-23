@@ -4,6 +4,10 @@ let generatedStrings = new Map();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
+
   // ウェブパックの設定
   webpack: (config, { dev }) => {
     config.infrastructureLogging = {
