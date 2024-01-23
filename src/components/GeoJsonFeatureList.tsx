@@ -7,8 +7,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Grid from '@mui/material/Grid';
 import ProvideInformationButton from './ProvideInformationButton';
-import Drawer from '@mui/material/Drawer';
-import { useState, Fragment } from 'react';
+import ProvideInformationDrawer from './ProvideInformationDrawer';
+import { useState } from 'react';
 
 interface GeoJsonFeatureListProps {
   emoji?: string;
@@ -45,11 +45,7 @@ export default function GeoJsonFeatureList({
 
   return (
     <div key={name} className={`py-2 ${length !== index + 1 && 'border-b border-zinc-200'}`}>
-      <Fragment>
-        <Drawer anchor="left" open={menuState} onClose={toggleDrawer(false)} className="overflow-hidden">
-          <span>test</span>
-        </Drawer>
-      </Fragment>
+      <ProvideInformationDrawer onClick={toggleDrawer(false)} menuState={menuState} />
       <PositionType emoji={emoji} index={index} geoIndex={geoIndex} />
       <Accordion sx={{ boxShadow: 0 }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
