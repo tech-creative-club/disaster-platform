@@ -51,7 +51,12 @@ export default function GeoJsonFeatureList({
 
   return (
     <div key={name} className={`py-2 ${length !== index + 1 && 'border-b border-zinc-200'}`}>
-      <ProvideInformationDrawer onClick={toggleDrawer(false)} menuState={menuState} options={option} />
+      <ProvideInformationDrawer
+        onClose={toggleDrawer(false)}
+        onClick={toggleDrawer(false)}
+        menuState={menuState}
+        options={option}
+      />
       <PositionType emoji={emoji} index={index} geoIndex={geoIndex} />
       <Accordion sx={{ boxShadow: 0 }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>

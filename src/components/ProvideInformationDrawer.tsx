@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 interface Props {
   [key: string]: any;
   options?: Content;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClose?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export interface Content {
@@ -81,14 +81,22 @@ export default function ProvideInformationDrawer(props: Props): React.JSX.Elemen
 
   return (
     <Fragment>
-      <Drawer anchor="left" open={open} className="overflow-hidden">
-        <div className="flex h-full w-screen flex-col p-8 sm:w-fit">
+      <Drawer anchor="left" open={open} onClose={props.onClose}>
+        <div className="flex h-full w-screen flex-col bg-white p-8 sm:w-fit">
           <div className="flex flex-1 flex-col">
-            <p className="text-lg font-medium">{option?.shelterName}</p>
-            <p className="text-sm font-medium text-zinc-900">の情報提供</p>
-            <p className="pt-3 text-xs font-normal text-zinc-400">
-              下記内容から該当するものを選択してください
-            </p>
+            <div className="flex flex-1 flex-row justify-between">
+              <div>
+                <p className="text-lg font-medium">{option?.shelterName}</p>
+                <p className="pt-3 text-xs font-normal text-zinc-400">
+                  下記内容から該当するものを選択してください
+                </p>
+              </div>
+              <div>
+                <button className="px-2 text-sm font-medium" onClick={props.onClose}>
+                  戻る
+                </button>
+              </div>
+            </div>
             <div className="flex-1 pt-5">
               <form
                 onSubmit={handleSubmit(onSubmit)}
@@ -139,7 +147,7 @@ export default function ProvideInformationDrawer(props: Props): React.JSX.Elemen
             <ProvideInformationButton
               icon="disable"
               className="w-full justify-center bg-zinc-200 font-medium text-zinc-900 hover:bg-zinc-300"
-              onClick={props.onClick}
+              onClick={props.onClose}
               message="やめる"
             />
           </div>
