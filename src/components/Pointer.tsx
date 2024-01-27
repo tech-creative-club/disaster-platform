@@ -1,9 +1,11 @@
-'use client';
+'use strict';
 
 import React, { useState } from 'react';
 import { Marker } from 'react-map-gl/maplibre';
 import { Feature, Geometry, GeoJsonProperties, Point } from 'geojson';
 import PointerDatails from './PointerDetails';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 interface Props {
   title: string;
@@ -19,6 +21,7 @@ interface Props {
   index: number;
   children?: React.ReactNode;
   printMode?: boolean;
+  isProduction?: boolean;
 }
 
 export default function Pointer({
@@ -31,21 +34,49 @@ export default function Pointer({
   index,
   children,
   printMode,
+  isProduction,
 }: Props): React.JSX.Element {
   const [isHover, setIsHover] = useState<boolean>(false);
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const url = `${pathname}`;
+    const parts = url.split('/').filter(Boolean);
+    const amenity = parts[0];
+    const id = parts[1];
+    if (!feature?.properties?.amenity) return;
+    if (feature.properties?.amenity === amenity && String(feature.id).includes(id)) {
+      setIsHover(true);
+    }
+  }, [feature, pathname]);
 
   if (!feature || !center) {
     return <span>null</span>;
   }
 
   const address: string = feature.properties?.['KSJ2:AdminArea'] + ' ' + feature.properties?.['KSJ2:ADS'];
+  const buildingIdString = String(feature.id);
+  const buildingId = buildingIdString.substring(buildingIdString.lastIndexOf('/') + 1);
+  // if (!isProduction) console.log(`Building ID: ${buildingId} Type: ${feature.properties?.amenity}`);
+
+  const handle = () => {
+    if (feature.properties?.amenity) {
+      window.history.pushState(
+        null,
+        '',
+        '/' + feature.properties.amenity + '/' + buildingId + window.location.hash
+      );
+    }
+    onClickMarker(center);
+  };
 
   return (
     <Marker
       key={feature?.id}
       longitude={center.geometry.coordinates[0]}
       latitude={center.geometry.coordinates[1]}
-      onClick={() => onClickMarker(center)}
+      onClick={handle}
       style={{ zIndex: isHover ? zIndex * 2 : zIndex }}
       className="items=center justify-center"
     >

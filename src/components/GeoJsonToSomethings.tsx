@@ -1,10 +1,31 @@
 // @ts-ignore
 import * as turf from '@turf/turf';
+
 import { Feature, FeatureCollection, GeoJsonProperties, Point } from 'geojson';
-import { Fragment, useCallback, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect } from 'react';
 import { Layer, Source, useMap } from 'react-map-gl/maplibre';
+import { usePathname } from 'next/navigation';
 import Pointer from './Pointer';
 import Icon from './Icon';
+
+function calculateCenterFromGeometry(feature: any) {
+  switch (feature.geometry.type) {
+    case 'Polygon':
+      const polygonFeatures = turf.polygon(feature.geometry.coordinates);
+      return turf.centroid(polygonFeatures);
+    case 'MultiPolygon':
+      const multiPolygonFeatures = turf.multiPolygon(feature.geometry.coordinates);
+      return turf.centroid(multiPolygonFeatures);
+    case 'LineString':
+      const bbox = turf.bbox(feature);
+      const polygon = turf.bboxPolygon(bbox);
+      return turf.centroid(polygon);
+    case 'Point':
+      return turf.point(feature.geometry.coordinates);
+    default:
+      return undefined;
+  }
+}
 
 export const GeoJsonToSomethings: React.FC<{
   geojson?: FeatureCollection;
@@ -15,7 +36,8 @@ export const GeoJsonToSomethings: React.FC<{
     emoji?: string;
   };
   printMode?: boolean;
-}> = ({ geojson, emoji, style, printMode }) => {
+  isProduction?: boolean;
+}> = ({ geojson, style, printMode, isProduction }) => {
   const { current: map } = useMap();
 
   const onClickMarker = useCallback(
@@ -31,6 +53,33 @@ export const GeoJsonToSomethings: React.FC<{
     },
     [map]
   );
+
+  // URL変更時に実行される処理
+  const pathname = usePathname();
+
+  useEffect((): void => {
+    const url = `${pathname}`;
+    const parts = url.split('/').filter(Boolean);
+    const amenity = parts[0];
+    const id = parts[1];
+
+    // デバッグ用
+    if (!isProduction) {
+      console.log({ amenity, id, path: url }); // Output Example: {"school", "0123456789", "/school/0123456789"}
+      console.log('The path has been updated: ' + url); // 開発環境時のみ実行
+    }
+
+    if (!geojson?.features) return;
+    for (const feature of geojson?.features) {
+      if (feature.properties?.amenity === amenity && String(feature.id).includes(id)) {
+        let center: Feature<Point, GeoJsonProperties> | undefined = undefined;
+        center = calculateCenterFromGeometry(feature);
+        onClickMarker(center);
+        return;
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   if (geojson === undefined || geojson.features === undefined) {
     return null;
@@ -72,25 +121,7 @@ export const GeoJsonToSomethings: React.FC<{
         }
 
         let center: Feature<Point, GeoJsonProperties> | undefined = undefined;
-        switch (feature.geometry.type) {
-          case 'Polygon':
-            const polygonFeatures = turf.polygon(feature.geometry.coordinates);
-            center = turf.centroid(polygonFeatures);
-            break;
-          case 'MultiPolygon':
-            const multiPolygonFeatures = turf.multiPolygon(feature.geometry.coordinates);
-            center = turf.centroid(multiPolygonFeatures);
-            break;
-          case 'LineString':
-            const bbox = turf.bbox(feature);
-            const polygon = turf.bboxPolygon(bbox);
-            center = turf.centroid(polygon);
-            break;
-          case 'Point':
-            center = turf.point(feature.geometry.coordinates);
-          default:
-            break;
-        }
+        center = calculateCenterFromGeometry(feature);
         if (center === undefined) {
           return null;
         }
@@ -156,6 +187,7 @@ export const GeoJsonToSomethings: React.FC<{
               style={style}
               index={index}
               printMode={printMode}
+              isProduction={isProduction}
             >
               {printMode ? (
                 index + 1

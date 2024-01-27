@@ -1,6 +1,8 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+export const runtime = 'edge';
+
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Map, GeolocateControl, NavigationControl, LngLatBounds } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
@@ -20,7 +22,11 @@ import DevelopmentMenu from '@/components/DevelopmentMenu';
 // @ts-ignore
 import * as turf from '@turf/turf';
 
-const Page = () => {
+export default function Page({ params }: { params: { map?: string } }) {
+  // 建物の種類を指定しているが、IDが指定されていない場合にリダイレクトさせる
+  const router = useRouter();
+  if (params.map?.[0] && !params.map?.[1]) router.push('/');
+
   const searchParams = useSearchParams();
   const searchParamsString = searchParams.toString();
   const printMode = searchParamsString === 'print=true';
@@ -172,6 +178,7 @@ const Page = () => {
                 geojson={geoJsonWithStyle.geojson}
                 style={geoJsonWithStyle.style}
                 printMode={mapPrintMode}
+                isProduction={isProduction}
               />
             );
           })}
@@ -208,6 +215,4 @@ const Page = () => {
       </div>
     </div>
   );
-};
-
-export default Page;
+}
