@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import ProvideInformationButton from './ProvideInformationButton';
 import ProvideInformationDrawer, { type Content } from './ProvideInformationDrawer';
 import { useState } from 'react';
+import { t } from 'i18next';
 
 interface GeoJsonFeatureListProps {
   emoji?: string;
@@ -77,7 +78,7 @@ export default function GeoJsonFeatureList({
               </span>
             ) : (
               <span className="truncate pt-0.5 text-sm font-normal text-zinc-400">
-                表示するコンテンツがありません
+                {t('There is no content to display')}
               </span>
             )}
           </div>

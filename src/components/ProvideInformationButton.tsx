@@ -1,4 +1,5 @@
 import { FaPen } from 'react-icons/fa';
+import { t } from 'i18next';
 
 interface Props {
   [key: string]: any;
@@ -14,7 +15,7 @@ export default function ProvideInformationButton(props: Props): React.JSX.Elemen
       onClick={props.onClick}
     >
       {props?.icon !== 'disable' && <FaPen className="mr-2 pb-0.5" size="13" />}
-      {props.message ? props.message : '情報提供をする'}
+      {props.message ? props.message : t('Informative.')}
     </button>
   );
 }

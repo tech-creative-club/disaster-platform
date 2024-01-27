@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import i18n from 'i18next';
 
 export default function DevelopmentMenu() {
   const [hidden, setHidden] = useState(false);
@@ -64,6 +65,7 @@ export default function DevelopmentMenu() {
               <p>Date: {now}</p>
               <p>Viewport: {`${viewport.width}x${viewport.height}`}</p>
               <p>Frame Rate: {frameRate}fps</p>
+              <p>Language: {i18n.language}</p>
             </>
           )}
           <button className={`absolute right-0 top-0 ${hidden && '-top-0.5'}`} onClick={handleHide}>

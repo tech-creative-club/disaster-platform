@@ -1,4 +1,5 @@
 import React from 'react';
+import { t } from 'i18next';
 
 interface PositionTypeProps {
   emoji?: string;
@@ -10,10 +11,10 @@ export default function PositionType({ emoji, index, geoIndex }: PositionTypePro
   return (
     <>
       {emoji === '🏥' && index === 0 && geoIndex === 0 && (
-        <span className="my-2 flex h-10 items-end truncate pl-5">病院</span>
+        <span className="my-2 flex h-10 items-end truncate pl-5">{t('hospital')}</span>
       )}
       {emoji === '🏫' && index === 0 && geoIndex === 1 && (
-        <span className="my-2 flex h-10 items-end truncate pl-5">学校</span>
+        <span className="my-2 flex h-10 items-end truncate pl-5">{t('school')}</span>
       )}
     </>
   );

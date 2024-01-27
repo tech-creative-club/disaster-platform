@@ -1,5 +1,7 @@
 'use client';
 
+export const runtime = 'edge';
+
 import { useSearchParams } from 'next/navigation';
 import { Map, GeolocateControl, NavigationControl, LngLatBounds } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -16,6 +18,8 @@ import CopyRights from '@/components/CopyRights';
 import { exampleGeoJson } from '@/constants/exampleGeoJson';
 import { Switch } from '@mui/material';
 import DevelopmentMenu from '@/components/DevelopmentMenu';
+import i18n from 'i18next';
+import { t } from 'i18next';
 
 // @ts-ignore
 import * as turf from '@turf/turf';
@@ -34,6 +38,8 @@ const Page = () => {
   const [geoJsonWithStyleListInMapBounds, setGeoJsonWithStyleListInMapBounds] = useState<
     Array<GeoJsonWithStyle>
   >([]);
+
+  i18n.changeLanguage((searchParams.get('lang') as string) || 'ja');
 
   //   print mode
   const [mapPrintMode, setMapPrintMode] = useState<boolean>(false);
@@ -182,7 +188,7 @@ const Page = () => {
       <div className="relative flex h-2/5 max-w-full flex-col overflow-hidden sm:h-full sm:w-4/12 sm:max-w-sm">
         <ul className="block list-none overflow-scroll py-4">
           <div className="flex pl-5">
-            <span className="flex items-center pr-2">プリントモードをオンにする</span>
+            <span className="flex items-center pr-2">{t('Turn on print mode')}</span>
             <Switch
               checked={mapPrintMode}
               onChange={handleSwitchChange}
