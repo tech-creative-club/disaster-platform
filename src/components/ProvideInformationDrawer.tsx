@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Drawer from '@mui/material/Drawer';
 import ProvideInformationButton from './ProvideInformationButton';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { t } from 'i18next';
 
 interface Props {
   [key: string]: any;
@@ -28,11 +29,20 @@ type Inputs = {
 };
 
 const fields = [
-  { name: 'waterSupplyConditions', label: '給水の状況', required: '入力してください' },
-  { name: 'foodConditions', label: '食料の状況', required: '入力してください' },
-  { name: 'sanitaryProductsConditions', label: '生理用品の状況', required: '入力してください' },
-  { name: 'medicineConditions', label: '薬の状況', required: '入力してください' },
-  { name: 'babyProductsConditions', label: '粉ミルクなどの状況（子供用品）', required: '入力してください' },
+  {
+    name: 'waterSupplyConditions',
+    required: '入力してください',
+  },
+  { name: 'foodConditions', required: '入力してください' },
+  {
+    name: 'sanitaryProductsConditions',
+    required: '入力してください',
+  },
+  { name: 'medicineConditions', required: '入力してください' },
+  {
+    name: 'babyProductsConditions',
+    required: '入力してください',
+  },
 ];
 
 export default function ProvideInformationDrawer(props: Props): React.JSX.Element {
@@ -61,13 +71,13 @@ export default function ProvideInformationDrawer(props: Props): React.JSX.Elemen
           <div className="pt-5" key={field.name}>
             <label className="flex flex-col">
               <div className="flex space-x-1">
-                <span>{field.label}</span>
-                {field.required && <span className="text-xs text-red-400">必須</span>}
+                <span>{t(field.name)}</span>
+                {field.required && <span className="text-xs text-red-400">{t('indispensable')}</span>}
               </div>
               <input
                 className="mt-2 border"
                 type="text"
-                {...register(field.name, { required: field.required })}
+                {...register(field.name, { required: field.required && t('please enter') })}
               />
             </label>
             {errors[field.name]?.message && (
@@ -88,12 +98,12 @@ export default function ProvideInformationDrawer(props: Props): React.JSX.Elemen
               <div>
                 <p className="text-lg font-medium">{option?.shelterName}</p>
                 <p className="pt-3 text-xs font-normal text-zinc-400">
-                  下記内容から該当するものを選択してください
+                  {t('Please select the applicable information from the following.')}
                 </p>
               </div>
               <div>
                 <button className="px-2 text-sm font-medium" onClick={props.onClose}>
-                  戻る
+                  {t('return')}
                 </button>
               </div>
             </div>
@@ -106,8 +116,8 @@ export default function ProvideInformationDrawer(props: Props): React.JSX.Elemen
                   <div className="pt-5">
                     <label>
                       <div className="flex space-x-1">
-                        <span>避難所は開いてますか？</span>
-                        <span className="text-xs text-red-400">必須</span>
+                        <span>{t('Is the shelter open?')}</span>
+                        <span className="text-xs text-red-400">{t('indispensable')}</span>
                       </div>
                       <div className="flex flex-col pt-5">
                         <div className="flex space-x-1">
@@ -116,7 +126,7 @@ export default function ProvideInformationDrawer(props: Props): React.JSX.Elemen
                             value={1}
                             {...(register('shelterOpen'), { required: true, name: 'shelterOpen' })}
                           />
-                          <span>開いている</span>
+                          <span>{t('open')}</span>
                         </div>
                         <div className="flex space-x-1">
                           <input
@@ -124,7 +134,7 @@ export default function ProvideInformationDrawer(props: Props): React.JSX.Elemen
                             value={0}
                             {...(register('shelterOpen'), { required: true, name: 'shelterOpen' })}
                           />
-                          <span>開いていない</span>
+                          <span>{t('close')}</span>
                         </div>
                       </div>
                     </label>
@@ -148,7 +158,7 @@ export default function ProvideInformationDrawer(props: Props): React.JSX.Elemen
               icon="disable"
               className="w-full justify-center bg-zinc-200 font-medium text-zinc-900 hover:bg-zinc-300"
               onClick={props.onClose}
-              message="やめる"
+              message={t('cancel')}
             />
           </div>
         </div>
