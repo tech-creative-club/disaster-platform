@@ -1,5 +1,7 @@
 'use client';
 
+export const runtime = 'edge';
+
 import { useSearchParams } from 'next/navigation';
 import { Map, GeolocateControl, NavigationControl, LngLatBounds } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
