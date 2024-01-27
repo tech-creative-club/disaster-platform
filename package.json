@@ -7,10 +7,9 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "scripts": {
-    "tailwind:prepare": "tw-patch install && tw-patch extract",
     "debug": "NODE_OPTIONS='--inspect' next dev",
     "dev": "npx prisma generate && next dev",
-    "build": "npm run tailwind:prepare && npx prisma generate && next build",
+    "build": "npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write '**/*.(ts|tsx)'",
@@ -54,9 +53,7 @@
     "prettier-plugin-tailwindcss": "^0.5.11",
     "prisma": "5.8.1",
     "tailwindcss": "^3.4.1",
-    "tailwindcss-patch": "^2.2.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5",
-    "unplugin-tailwindcss-mangle": "^2.2.2"
+    "typescript": "^5"
   }
 }
